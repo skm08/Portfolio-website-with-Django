@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Contact | {% if profile %}{{ profile.display_name }}{% else %}Developer Portfolio{% endif %}{% endblock %}
+{% block description %}Contact the developer about a project or opportunity.{% endblock %}
+
+{% block content %}
+	<section class="wrapper style1">
+		<div class="container portfolio-form-container">
+			<header class="major">
+				<h2>Get in touch</h2>
+				<p>Send a message about a project, opportunity, or question.</p>
+			</header>
+			<form method="post">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<ul class="actions"><li><button class="button primary" type="submit">Send message</button></li></ul>
+			</form>
+			{% if profile.contact_email %}<p>You can also email <a href="mailto:{{ profile.contact_email }}">{{ profile.contact_email }}</a>.</p>{% endif %}
+		</div>
+	</section>
+{% endblock %}

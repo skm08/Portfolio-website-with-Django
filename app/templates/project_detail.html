@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} | {% if profile %}{{ profile.display_name }}{% else %}Developer Portfolio{% endif %}{% endblock %}
+{% block description %}{{ project.summary }}{% endblock %}
+
+{% block content %}
+	<article class="wrapper style1">
+		<div class="container portfolio-project">
+			<header class="major">
+				<p class="eyebrow">Project case study</p>
+				<h2>{{ project.title }}</h2>
+				<p>{{ project.summary }}</p>
+			</header>
+			{% if project.image_path %}<img class="portfolio-project-image" src="{% static project.image_path %}" alt="{{ project.title }}" />{% elif project.image_url %}<img class="portfolio-project-image" src="{{ project.image_url }}" alt="{{ project.title }}" />{% endif %}
+			{% if project.technologies %}<p class="portfolio-meta"><strong>Technologies:</strong> {{ project.technologies }}</p>{% endif %}
+			<div class="portfolio-project-description">{{ project.description|linebreaks }}</div>
+			<ul class="actions">
+				{% if project.live_url %}<li><a class="button primary" href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer">View live project</a></li>{% endif %}
+				{% if project.source_url %}<li><a class="button" href="{{ project.source_url }}" target="_blank" rel="noopener noreferrer">View source</a></li>{% endif %}
+			</ul>
+			<p><a href="{% url 'project-list' %}">&larr; All projects</a></p>
+		</div>
+	</article>
+{% endblock %}

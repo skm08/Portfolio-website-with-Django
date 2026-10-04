@@ -1,0 +1,47 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="{% block description %}A software developer portfolio.{% endblock %}" />
+		<title>{% block title %}{% if profile %}{{ profile.display_name }}{% else %}Developer Portfolio{% endif %}{% endblock %}</title>
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/portfolio.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+	<body>
+		<div id="page-wrapper">
+			<header id="header">
+				<h1 id="logo"><a href="{% url 'home' %}">{% if profile %}{{ profile.display_name }}{% else %}Portfolio{% endif %}</a></h1>
+				<nav id="nav" aria-label="Main navigation">
+					<ul>
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li><a href="{% url 'project-list' %}">Projects</a></li>
+						<li><a href="{% url 'contact' %}">Contact</a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<main id="main">
+				{% if messages %}
+					<div class="container portfolio-messages" aria-live="polite">
+						{% for message in messages %}<p class="portfolio-message">{{ message }}</p>{% endfor %}
+					</div>
+				{% endif %}
+				{% block content %}{% endblock %}
+			</main>
+
+			<footer id="footer">
+				<ul class="icons">
+					{% if profile.github_url %}<li><a class="icon brands alt fa-github" href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer"><span class="label">GitHub</span></a></li>{% endif %}
+					{% if profile.linkedin_url %}<li><a class="icon brands alt fa-linkedin-in" href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer"><span class="label">LinkedIn</span></a></li>{% endif %}
+					{% if profile.contact_email %}<li><a class="icon solid alt fa-envelope" href="mailto:{{ profile.contact_email }}"><span class="label">Email</span></a></li>{% endif %}
+				</ul>
+				<ul class="copyright">
+					<li>&copy; {% if profile %}{{ profile.display_name }}{% else %}Portfolio{% endif %}</li>
+				</ul>
+			</footer>
+		</div>
+	</body>
+</html>

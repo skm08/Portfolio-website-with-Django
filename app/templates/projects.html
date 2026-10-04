@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Projects | {% if profile %}{{ profile.display_name }}{% else %}Developer Portfolio{% endif %}{% endblock %}
+{% block description %}Selected software projects and case studies.{% endblock %}
+
+{% block content %}
+	<section class="wrapper style1">
+		<div class="container">
+			<header class="major">
+				<h2>Projects</h2>
+				<p>Selected work, tools, and outcomes.</p>
+			</header>
+			<div class="portfolio-grid">
+				{% for project in projects %}
+					<article class="portfolio-card">
+						{% if project.image_path %}<img src="{% static project.image_path %}" alt="{{ project.title }}" loading="lazy" />{% elif project.image_url %}<img src="{{ project.image_url }}" alt="{{ project.title }}" loading="lazy" />{% endif %}
+						<div class="portfolio-card-content">
+							<h3><a href="{% url 'project-detail' project.slug %}">{{ project.title }}</a></h3>
+							<p>{{ project.summary }}</p>
+							{% if project.technologies %}<p class="portfolio-meta"><strong>Technologies:</strong> {{ project.technologies }}</p>{% endif %}
+							<a href="{% url 'project-detail' project.slug %}">View case study <span aria-hidden="true">&rarr;</span></a>
+						</div>
+					</article>
+				{% empty %}
+					<p>Projects are being added. Please check back soon.</p>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+{% endblock %}
